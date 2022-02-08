@@ -1,6 +1,6 @@
 # age-keygen-deterministic
 
-This is a very simple Rust CLI tool which you can use to deterministically create an [AGE](https://github.com/FiloSottile/age) private key from a passphrase.
+This is a very simple Rust CLI tool which you can use to deterministically derive an [age encryption](https://github.com/FiloSottile/age) keypair from a passphrase.
 
 ## Compile
 
@@ -19,7 +19,8 @@ Enter passphrase:
 AGE-SECRET-KEY-1LHZD5K7C0EVAA6G8CCYWRYKAMZN6FY5PR6QX8NMU958ZP3WCG3XSF2HGJM
 ```
 
-You can now create this secret key to the corresponding public key by piping the output to ```age-keygen -y```.
+You can now get the public key for this private key as you would with any other age private key, too.
+You simply have to pipe the private key to ```age-keygen -y```.
 If you do this for the example above, you will get the following output:
 
 ```
