@@ -1,0 +1,11 @@
+[package]
+name = "age-keygen-deterministic"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rpassword = "5.0.1"
+rust-argon2 = "0.8"
+bech32 = "0.8.1"
