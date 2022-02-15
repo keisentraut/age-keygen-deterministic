@@ -9,3 +9,6 @@ edition = "2021"
 rpassword = "5.0.1"
 rust-argon2 = "0.8"
 bech32 = "0.8.1"
+structopt = { version = "0.3", default-features = false }
+sha2 = "0.10.1"
+hmac = "0.12.0"
