@@ -1,7 +1,7 @@
-extern crate rpassword;
 use argon2::{self, Config, ThreadMode, Variant, Version};
 use bech32::{self, ToBase32, Variant as Bech32Variant};
 use hmac::{Hmac, Mac};
+use rpassword::prompt_password;
 use sha2::Sha256;
 use structopt::StructOpt;
 
@@ -26,7 +26,7 @@ fn main() {
     let (offset, count) = (opt.offset, opt.count);
     let offset_end = offset.checked_add(count).unwrap();
 
-    let passphrase = rpassword::prompt_password_stderr("Enter passphrase: ").unwrap();
+    let passphrase = rpassword::prompt_password("Enter passphrase: ").unwrap();
     if passphrase.as_bytes().len() < 16 {
         panic!("Passphrase must be at least 16 characters.");
     }
