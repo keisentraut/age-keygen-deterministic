@@ -4,9 +4,9 @@ version = "0.3.0"
 edition = "2021"
 
 [dependencies]
-rpassword = "7.0.0"
+rpassword = "7.2.0"
 rust-argon2 = "1.0.0"
 bech32 = "0.9.1"
 structopt = { version = "0.3.26", default-features = false }
-sha2 = "0.10.2"
+sha2 = "0.10.6"
 hmac = "0.12.1"
