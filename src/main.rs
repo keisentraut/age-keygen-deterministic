@@ -1,4 +1,4 @@
-use argon2::{self, Config, ThreadMode, Variant, Version};
+use argon2::{self, Config, Variant, Version};
 use bech32::{self, ToBase32, Variant as Bech32Variant};
 use hmac::{Hmac, Mac};
 use sha2::Sha256;
@@ -34,7 +34,7 @@ impl AgeKeyGenerator {
             mem_cost: 65536,
             time_cost: 10,
             lanes: 2,
-            thread_mode: ThreadMode::Parallel,
+            //thread_mode: ThreadMode::Parallel,
             secret: &[],
             ad: &[],
             hash_length: 64,

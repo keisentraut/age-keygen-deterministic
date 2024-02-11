@@ -1,12 +1,12 @@
 [package]
 name = "age-keygen-deterministic"
-version = "0.3.0"
+version = "0.4.0"
 edition = "2021"
 
 [dependencies]
-rpassword = "7.2.0"
-rust-argon2 = "1.0.0"
+rpassword = "7.3.1"
+rust-argon2 = "2.1.0"
 bech32 = "0.9.1"
 structopt = { version = "0.3.26", default-features = false }
-sha2 = "0.10.6"
+sha2 = "0.10.8"
 hmac = "0.12.1"
