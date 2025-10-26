@@ -28,7 +28,7 @@ struct Opt {
     /// Time / Iterations
     time_cost: u32,
 
-    #[structopt(default_value = "4", short, long)]
+    #[structopt(default_value = "1", short, long)]
     /// Parallelism
     lanes: u32,
 
