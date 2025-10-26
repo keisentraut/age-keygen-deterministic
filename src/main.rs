@@ -15,9 +15,23 @@ struct Opt {
     #[structopt(default_value = "0", short, long)]
     /// optional u64 offset for index of keys
     offset: u64,
+
     #[structopt(default_value = "1", short, long)]
     /// optional number of secret keys which should be created
     count: u64,
+
+    #[structopt(default_value = "65536", short, long)]
+    /// Memory
+    mem_cost: u32,
+
+    #[structopt(default_value = "5", short, long)]
+    /// Time / Iterations
+    time_cost: u32,
+
+    #[structopt(default_value = "4", short, long)]
+    /// Parallelism
+    lanes: u32,
+
 }
 
 struct AgeKeyGenerator {
@@ -25,15 +39,15 @@ struct AgeKeyGenerator {
 }
 
 impl AgeKeyGenerator {
-    fn new(passphrase: String) -> Self {
+    fn new(passphrase: String, mem_cost: u32, time_cost: u32, lanes: u32) -> Self {
         // I explicitly hardcoded the Argon2 parameters here, because Config::default() might change in future.
         let salt = b"age-keygen-deterministic-hardcoded-salt";
         let config = Config {
             variant: Variant::Argon2id,
             version: Version::Version13,
-            mem_cost: 65536,
-            time_cost: 10,
-            lanes: 2,
+            mem_cost: mem_cost,
+            time_cost: time_cost,
+            lanes: lanes,
             //thread_mode: ThreadMode::Parallel,
             secret: &[],
             ad: &[],
@@ -57,17 +71,17 @@ impl AgeKeyGenerator {
 
 fn main() {
     let opt = Opt::from_args();
-    let (offset, count) = (opt.offset, opt.count);
+    let (offset, count, mem_cost, time_cost, lanes) = (opt.offset, opt.count, opt.mem_cost, opt.time_cost, opt.lanes);
     let offset_end = offset
         .checked_add(count)
         .expect("Integer overflow during offset calculation.");
 
     let passphrase = rpassword::prompt_password("Enter passphrase: ").unwrap();
-    if passphrase.as_bytes().len() < 16 {
-        panic!("Passphrase must be at least 16 characters.");
+    if passphrase.as_bytes().len() < 1 {
+        panic!("Passphrase must be at least 1 characters.");
     }
 
-    let agk = AgeKeyGenerator::new(passphrase);
+    let agk = AgeKeyGenerator::new(passphrase, mem_cost, time_cost, lanes);
     for i in offset..offset_end {
         println!("# secret key {:} below", i);
         println!("{:}", agk.get_key(i));
