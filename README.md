@@ -27,8 +27,11 @@ FLAGS:
     -V, --version    Prints version information
 
 OPTIONS:
-    -c, --count <count>      optional number of secret keys which should be created [default: 1]
-    -o, --offset <offset>    optional u64 offset for index of keys [default: 0]
+    -c, --count <count>            optional number of secret keys which should be created [default: 1]
+    -l, --lanes <lanes>            Parallelism [default: 1]
+    -m, --mem-cost <mem-cost>      Memory [default: 65536]
+    -o, --offset <offset>          optional u64 offset for index of keys [default: 0]
+    -t, --time-cost <time-cost>    Time / Iterations [default: 5]
 ```
 
 If you only need a single age key, just use it without any command line arguments.
