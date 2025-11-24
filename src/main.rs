@@ -1,4 +1,4 @@
-use argon2::{self, Config, Variant, Version};
+use argon2::{self, Config, Variant, Version, ThreadMode};
 use bech32::{self, ToBase32, Variant as Bech32Variant};
 use hmac::{Hmac, Mac};
 use sha2::Sha256;
@@ -18,6 +18,9 @@ struct Opt {
     #[structopt(default_value = "1", short, long)]
     /// optional number of secret keys which should be created
     count: u64,
+    #[structopt(short, long)]
+    /// force entering the passphrase twice 
+    doublecheck_passphrase : bool
 }
 
 struct AgeKeyGenerator {
@@ -34,7 +37,7 @@ impl AgeKeyGenerator {
             mem_cost: 65536,
             time_cost: 10,
             lanes: 2,
-            //thread_mode: ThreadMode::Parallel,
+            thread_mode: ThreadMode::Parallel,
             secret: &[],
             ad: &[],
             hash_length: 64,
@@ -57,7 +60,7 @@ impl AgeKeyGenerator {
 
 fn main() {
     let opt = Opt::from_args();
-    let (offset, count) = (opt.offset, opt.count);
+    let (offset, count, doublecheck_passphrase) = (opt.offset, opt.count, opt.doublecheck_passphrase);
     let offset_end = offset
         .checked_add(count)
         .expect("Integer overflow during offset calculation.");
@@ -65,6 +68,13 @@ fn main() {
     let passphrase = rpassword::prompt_password("Enter passphrase: ").unwrap();
     if passphrase.as_bytes().len() < 16 {
         panic!("Passphrase must be at least 16 characters.");
+    }
+
+    if doublecheck_passphrase {
+        let passphrase2 = rpassword::prompt_password("Enter again:      ").unwrap();
+        if passphrase.as_bytes() != passphrase2.as_bytes() {
+            panic!("Passphrases do not match!");
+        }
     }
 
     let agk = AgeKeyGenerator::new(passphrase);
