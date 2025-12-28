@@ -1,3 +1,10 @@
+# THIS PROJECT IS UNMAINTAINED
+
+I wrote this as workaround when there ```age``` did not support non-interactive passphrases.
+There is now a (semi-)official way how to do that.
+Please refer to this [announcement](https://github.com/FiloSottile/age/discussions/256#discussioncomment-15334934) and the [batchpass plugin](https://github.com/FiloSottile/age/blob/main/cmd/age-plugin-batchpass/plugin-batchpass.go) instead of this script.
+I will not update this project anymore and do not recommend to use it.
+
 # age-keygen-deterministic
 
 This is a very simple Rust CLI tool which deterministically derives a single (or multiple) [age encryption](https://github.com/FiloSottile/age) secret keys from a passphrase.
